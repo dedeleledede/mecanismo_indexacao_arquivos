@@ -77,7 +77,7 @@ ex: ./indice buscar
 err: "erro: argumentos insuficientes (<termo>)"
 ---
 usuario roda busca com termos
-ex: ./indice "buscar redes computadores"
+ex: ./indice buscar redes computadores
 ---
 verificar se existe index.dat no diretório atual
 se nao existir, avisar: “rode a indexacao primeiro”
@@ -114,7 +114,7 @@ le o modo >
 - se o modo for buscar
 
  - verifica se tem ao menos um termo apos a palavra buscar
-  - se tiver → mostra erro > encerra
+  - se nao tiver > mostra erro > encerra
 
  - verifica se o arquivo index.dat existe
   - se nao existir > diz “indice nao encontrado, rode a indexacao primeiro” > encerra
@@ -128,3 +128,5 @@ terceiro passo: planejar a versao minima viavel do main
 ter um main que apenas reconhece o modo e imprime mensagens de teste.
 modo construir “entrando no modo de indexacao com diretorio: X”
 modo buscar “entrando no modo de busca com termos: ...”
+
+ - commit 2 (main minimo viavel)

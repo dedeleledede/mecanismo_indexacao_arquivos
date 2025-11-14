@@ -1,12 +1,64 @@
-#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 
-int main(){
-    return 1;
+using namespace std;
+
+enum Modo {construir, busca, invalid};
+Modo parse(const char* s){
+    string modo = s;
+    if (modo == "construir") return construir;
+    if (modo == "busca") return busca;
+    return invalid;
 }
 
+int main(int argc, char* argv[]){
+
+    if (argc < 2){
+        fprintf(stderr, "ERRO: Argumentos insuficientes\n(Modelo de uso: indice modo(construir/busca) <dir>/<termo>)\n");
+        return -1;
+    }
 
 
+    Modo m = parse(argv[1]);
+
+    switch(m){
+        case construir:            
+            if (argc < 3){
+                fprintf(stderr, "ERRO: Argumentos insuficientes\n(indice construir <dir>)\n");
+                return -1;
+            }
+
+            cout << "entrando em modo construcao com dir " << argv[2] << endl;
+            //indexacao aqui
+            //criar objetos, varrer diretorio, construir indice, salvar index.dat etc
+
+            break;
+        case busca:
+            if (argc < 3){
+                fprintf(stderr, "ERRO: Argumentos insuficientes\n(indice busca <termo1> <termo2> ...)\n");
+                return -1;
+            }
+
+            cout << "entrando em modo busca com argumentos: ";
+
+            for(int i = 2; i < argc; i++){
+                cout << argv[i] << " ";
+            }
+            cout << "\n";
+
+            /*
+            busca aqui
+            verificar se index.dat existe
+            carregar o indice
+            mandar buscar os termos
+            exibir a lista de arquivos
+            */
 
 
-
+            break;
+        default:
+            fprintf(stderr, "ERRO: Argumentos de modo invalidos \n(modelo: indice modo(construir/busca)\n");
+            return -1;
+    }
+    return 0;
+}
