@@ -56,7 +56,11 @@ int run_cli(int argc, char* argv[]) {
         text_processor.load_stopwords("data/stopwords.txt");
 
         Indexer indexer(index, text_processor);
-        indexer.build(dir);
+
+        if (!indexer.build(dir)) {
+            cerr << "ERRO: falha ao construir o indice." << endl;
+            return -1;
+        }
 
         // salva o indice em disco
         if (!Serializer::save(index, "data/index.dat")) {

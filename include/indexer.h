@@ -9,10 +9,10 @@ private:
     Index& index;
     TextProcessor& text_processor;
 
-    void process_file(const std::string& filepath);
+    bool process_file(const std::string& filepath);
 
 public:
-    Indexer(Index& idx, TextProcessor& tp) : index(idx), text_processor(tp) {}
+    Indexer(Index& idx, TextProcessor& tp);
 
-    void build(const std::string& root_dir);
+    bool build(const std::string& root_dir);
 };
