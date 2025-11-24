@@ -4,6 +4,8 @@
 #include "index.h"
 #include "indexer.h"
 #include "text_processor.h"
+#include "serializer.h"
+#include "query_processor.h"
 
 using namespace std;
 
@@ -43,6 +45,13 @@ int main(int argc, char* argv[]){
             Indexer indexer(index, text_processor);
             indexer.build(dir);
 
+            bool saved = Serializer::save(index, "../data/index.dat");
+
+            if (!saved){
+                cerr << "ERRO: Falha ao salvar o indice em index.dat" << endl;
+                return -1;
+            }
+
             break;
         }
 
@@ -53,19 +62,46 @@ int main(int argc, char* argv[]){
             }
 
             cout << "entrando em modo busca com argumentos: ";
+            
+            string query;
 
             for(int i = 2; i < argc; i++){
                 cout << argv[i] << " ";
+                if (query.size() > 0)
+                    query += " ";
+                query += argv[i];
             }
             cout << "\n";
+            
+            Index index;
+            
+            TextProcessor text_processor;
+            text_processor.load_stopwords("../data/stopwords.txt");
+            
+            vector<string> terms = text_processor.process(query);
+            
+            bool loaded = Serializer::load(index, "../data/index.dat");
+            
+            if (!loaded){
+                cerr << "ERRO: indice.dat nao encontrado. Rode a indexacao primeiro." << endl;
+                return -1;
+            }
+            
+            QueryProcessor query_processor(index);
+            auto doc_ids = query_processor.process_terms(terms);
 
-            /*
-            busca aqui
-            verificar se index.dat existe
-            carregar o indice
-            mandar buscar os termos
-            exibir a lista de arquivos
-            */
+            if (doc_ids.empty()){
+                cout << "Nenhum documento encontrado para essa busca." << endl;
+            }
+            else {
+                cout << "Documentos encontrados:" << endl;
+                for (int id : doc_ids){
+                    string path = index.get_filepath(id);
+
+                    if (!path.empty())
+                        cout << path << endl;
+                }
+            }
 
             break;
         }
@@ -75,5 +111,3 @@ int main(int argc, char* argv[]){
     }
     return 0;
 }   
-
-            

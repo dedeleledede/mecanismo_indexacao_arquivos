@@ -7,7 +7,8 @@ SRCS = 	src/main.cpp \
        	src/index.cpp \
        	src/text_processor.cpp \
        	src/indexer.cpp \
-	   	src/serializer.cpp 
+	   	src/serializer.cpp \
+		src/query_processor.cpp
 OBJS = $(SRCS:src/%.cpp=build/%.o)
 
 all: $(TARGET)
