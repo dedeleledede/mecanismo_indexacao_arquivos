@@ -10,7 +10,10 @@ namespace fs = std::filesystem;
 Indexer::Indexer(Index& idx, TextProcessor& tp) : index(idx), text_processor(tp) {}
 
 bool Indexer::process_file(const string& filepath) {
-    ifstream file(filepath);
+    fs::path abs_path = fs::absolute(filepath);
+    string abs_str = abs_path.string();
+
+    ifstream file(abs_path, ios::binary);
     if (!file.is_open()) 
         return false;
 
@@ -19,12 +22,14 @@ bool Indexer::process_file(const string& filepath) {
     auto words = text_processor.process(content);
 
     for (const auto& word : words) 
-        index.add_word(word, filepath);
+        index.add_word(word, abs_str);
 
     return true;
 }
 
 bool Indexer::build(const string& root_dir) {
+    namespace fs = std::filesystem;
+
     if (!fs::exists(root_dir)) {
         cerr << "ERRO: diretorio nao existe: " << root_dir << endl;
         return false;
@@ -35,6 +40,9 @@ bool Indexer::build(const string& root_dir) {
 
     for (const auto& entry : fs::recursive_directory_iterator(root_dir)) {
         if (entry.is_regular_file()) {
+            if (entry.path().extension() != ".txt")
+                continue;
+            
             const string path = entry.path().string();
 
             if (process_file(path)) {
