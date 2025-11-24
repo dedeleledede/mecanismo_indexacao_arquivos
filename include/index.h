@@ -35,5 +35,5 @@ public:
   //setters
   void set_inverted_index(const std::unordered_map<std::string, doc_set_id>& mapa);
 
-  void set_doc_maps(const std::unordered_map<std::string, int>& filepat_to_id, const std::unordered_map<int, std::string>& id_to_filepath);
+  void set_doc_maps(const std::unordered_map<std::string, int>& filepath_to_id, const std::unordered_map<int, std::string>& id_to_filepath);
 };
