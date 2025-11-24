@@ -10,11 +10,7 @@
 #include "serializer.h"
 #include "query_processor.h"
 
-using std::cerr;
-using std::cout;
-using std::endl;
-using std::string;
-using std::vector;
+using namespace std;
 
 enum Modo {
     MODO_CONSTRUIR,
