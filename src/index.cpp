@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int Index::create_doc(const std::string& filepath) {
+int Index::create_doc(const string& filepath) {
   auto it = path_to_id.find(filepath);
 
   if (it != path_to_id.end())
@@ -18,7 +18,7 @@ int Index::create_doc(const std::string& filepath) {
   return new_id; //retorna o novo id
 }
 
-void Index::add_word(const std::string& word, const std::string& filepath) {
+void Index::add_word(const string& word, const string& filepath) {
   int doc_id = create_doc(filepath);
   inverted_index_map[word].insert(doc_id);
 }
@@ -33,7 +33,7 @@ string Index::get_filepath(int doc_id) const {
   return string{}; //return empty string, chamador checar
 }
 
-const Index::doc_set_id& Index::get_docs_from_word(const std::string& word) const{
+const Index::doc_set_id& Index::get_docs_from_word(const string& word) const{
   auto it = inverted_index_map.find(word);
 
   if (it != inverted_index_map.end())
