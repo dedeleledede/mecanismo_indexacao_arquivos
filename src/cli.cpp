@@ -53,18 +53,18 @@ int run_cli(int argc, char* argv[]) {
 
         Index index;
         TextProcessor text_processor;
-        text_processor.load_stopwords("../data/stopwords.txt");
+        text_processor.load_stopwords("data/stopwords.txt");
 
         Indexer indexer(index, text_processor);
         indexer.build(dir);
 
         // salva o indice em disco
-        if (!Serializer::save(index, "../data/index.dat")) {
+        if (!Serializer::save(index, "data/index.dat")) {
             cerr << "ERRO: nao foi possivel salvar o indice em ../data/index.dat" << endl;
             return -1;
         }
 
-        cout << "Indice salvo em ../data/index.dat" << endl;
+        cout << "Indice salvo em data/index.dat" << endl;
         break;
     }
 
@@ -89,7 +89,7 @@ int run_cli(int argc, char* argv[]) {
 
         // carrega o indice de disco
         Index index;
-        if (!Serializer::load(index, "../data/index.dat")) {
+        if (!Serializer::load(index, "data/index.dat")) {
             cerr << "ERRO: indice /data/index.dat nao encontrado. Rode a indexacao primeiro." << endl;
             return -1;
         }
