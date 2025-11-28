@@ -14,7 +14,7 @@ make
 
 Isso gera o executável:
 
-```bash
+```bash 
 ./indice
 ```
 
